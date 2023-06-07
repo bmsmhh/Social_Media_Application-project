@@ -37,7 +37,8 @@ public class AccountService {
         
             Account existingAccount = accountDAO.getAccountByUserInputs
             (account.getUsername(), account.getPassword());
-            if (account.getUsername().equals(existingAccount.getUsername())
+            if (existingAccount != null &&
+            account.getUsername().equals(existingAccount.getUsername())
             && account.getPassword().equals(existingAccount.getPassword())) {
                 return existingAccount; 
             }
