@@ -27,35 +27,26 @@ public class AccountService {
         return accountDAO.insertAccount(account);
     }
     public Account login(Account account){
-        if (account.getUsername() == null || account.getUsername().equals("")
-        || account.getPassword() == null || account.getPassword().equals("")) {
+        if (account.getUsername() == null 
+        || account.getUsername().equals("")
+        || account.getPassword() == null 
+        || account.getPassword().equals("")) {
     return null; 
 }
         
         //this method check if the account with provided username, password exists
         //but!!! it doesn't check if inputs match with provided inputs
+       
         
             Account existingAccount = accountDAO.getAccountByUserInputs
             (account.getUsername(), account.getPassword());
-            if (existingAccount != null &&
-            account.getUsername().equals(existingAccount.getUsername())
-            && account.getPassword().equals(existingAccount.getPassword())) {
+           
+            if (existingAccount != null 
+            && account.getUsername() == existingAccount.getUsername()
+            && account.getPassword() == existingAccount.getPassword()) {
                 return existingAccount; 
             }
             
                return null;
-        }
-   /* public Account login(Account account) {
-    if (account != null && account.getUsername() != null 
-        && account.getPassword() != null) {
-        Account existingAccount = accountDAO.getAccountByUserInputs(account.getUsername(), account.getPassword());
-        if (existingAccount != null 
-            && account.getUsername().equals(existingAccount.getUsername())
-                && account.getPassword().equals(existingAccount.getPassword())) {
-            return existingAccount;
-        }
-    }
-    return null;
-}
- */
 }  
+}

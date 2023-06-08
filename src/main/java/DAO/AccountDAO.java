@@ -33,7 +33,28 @@ public class AccountDAO {
         return null;
     }
 
-   
+    public Account getAccountById(int account_id){
+        try{
+            Connection connection = ConnectionUtil.getConnection();
+            String sql = "SELECT * FROM account WHERE account_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, account_id);
+            ResultSet rs = preparedStatement.executeQuery();
+  
+        
+               while(rs.next()){
+                  Account account = new Account(rs.getInt("account_id"),
+                  rs.getString("username"), 
+                  rs.getString("password"));
+                  return account;
+               }
+        } 
+        catch(SQLException e){
+           System.out.println("Error of Finding Account By Id " + e.getMessage());
+        }
+        return null;
+     }
+
     public Account insertAccount(Account account){
         Connection connection = ConnectionUtil.getConnection();
         try {
