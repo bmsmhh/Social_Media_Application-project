@@ -42,6 +42,8 @@ public class AccountService {
             (account.getUsername(), account.getPassword());
            
             if (existingAccount != null 
+        //And finally when change equals() method to `==`operator
+        //We got it!!!
             && account.getUsername() == existingAccount.getUsername()
             && account.getPassword() == existingAccount.getPassword()) {
                 return existingAccount; 
