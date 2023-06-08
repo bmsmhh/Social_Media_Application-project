@@ -45,7 +45,9 @@ public class AccountService {
         //And finally when change equals() method to `==`operator
         //We got it!!!
             && account.getUsername() == existingAccount.getUsername()
-            && account.getPassword() == existingAccount.getPassword()) {
+            && account.getPassword() == existingAccount.getPassword() 
+            || account.getPassword().equals(existingAccount.getPassword()) 
+            && account.getPassword().equals(existingAccount.getPassword())) {
                 return existingAccount; 
             }
             
