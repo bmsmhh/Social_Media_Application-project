@@ -26,9 +26,26 @@ public class SocialMediaController {
         app.post("/login", this::loginHandler);
         app.post("/messages", this::textCreatorHandler);
         app.get("/messages", this::getAllMessagesHandler);
-        
+        String path = "/messages/{message_id}";
+        app.patch(path, this::updateMessageHandler);
         return app;
     }
+
+
+    private void updateMessageHandler(Context ctx) throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    Message message = mapper.readValue(ctx.body(), Message.class);
+    int message_id = Integer.parseInt(ctx.pathParam("message_id"));
+    Message updatedMessage = messageService.updateMessage(message_id, message);
+    
+    if (updatedMessage == null) {
+        ctx.status(400);
+    } else {
+        String updatedMessageJson = mapper.writeValueAsString(updatedMessage);
+        ctx.result(updatedMessageJson).contentType("application/json");
+    }
+}
+
     private void getAllMessagesHandler(Context ctx){
         ctx.json(messageService.getAllMessages());
     }
