@@ -18,7 +18,10 @@ public class MessageDAO {
             String sql = "UPDATE message SET message_text = ? WHERE message_id =?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
+        
         preparedStatement.setString(1, message.getMessage_text());
+        //it is very importent to use message_id directly
+        //and don't use getMessage_id() method
         preparedStatement.setInt(2, message_id);
           
 

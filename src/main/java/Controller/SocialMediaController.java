@@ -28,7 +28,18 @@ public class SocialMediaController {
         app.get("/messages", this::getAllMessagesHandler);
         String path = "/messages/{message_id}";
         app.patch(path, this::updateMessageHandler);
+        app.get("/messages/{message_id}", this::getMessageByIdHandler);
+
         return app;
+    }
+    private void getMessageByIdHandler(Context ctx) {
+        int message_id = Integer.parseInt(ctx.pathParam("message_id"));
+        Message message = messageService.getMessageById(message_id);
+        if (message == null) {
+            ctx.result("");
+        } else {
+            ctx.json(message);
+        }
     }
 
 

@@ -22,6 +22,10 @@ public class MessageService {
     }
     
 
+    public Message getMessageById(int message_id){
+        return messageDAO.getMessageById(message_id);
+    }
+
     public Message updateMessage(int message_id, Message message) {
         Message existingMessage = messageDAO.getMessageById(message_id);
         if (existingMessage != null 
