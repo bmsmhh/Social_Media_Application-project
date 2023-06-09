@@ -29,9 +29,23 @@ public class SocialMediaController {
         String path = "/messages/{message_id}";
         app.patch(path, this::updateMessageHandler);
         app.get("/messages/{message_id}", this::getMessageByIdHandler);
+        app.delete("/messages/{message_id}", this::deleteMessageByMessageIdHandler);
 
         return app;
     }
+
+    private void deleteMessageByMessageIdHandler(Context ctx) {
+        int message_id = Integer.parseInt(ctx.pathParam("message_id"));
+        Message message = messageService.deleteMessageByMessageId(message_id);
+        if (message == null) {
+            ctx.status(200).result("");
+        } else {
+            ctx.status(200).json(message);
+        }
+    }
+
+
+
     private void getMessageByIdHandler(Context ctx) {
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
         Message message = messageService.getMessageById(message_id);
