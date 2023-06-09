@@ -24,28 +24,14 @@ public class SocialMediaController {
         Javalin app = Javalin.create();
         app.post("/register", this::registerHandler);
         app.post("/login", this::loginHandler);
-        app.post("/typeText", this::textCreaterHandler);
+        app.post("/messages", this::textCreatorHandler);
         
         return app;
     }
-    private void loginHandler(Context context)throws JsonProcessingException{
-        ObjectMapper mapper = new ObjectMapper();
-        Account account = mapper.readValue(context.body(), 
-        Account.class);
-        String username = account.getUsername();
-        String password = account.getPassword();
- 
-        Account loginAccount = accountService.login(account);
-        if(loginAccount == null){
-          context.status(401).json("");
-        }else{
-          context.json(mapper.writeValueAsString(loginAccount));
-        }
-     }
-     private void textCreaterHandler(Context ctx) throws JsonProcessingException {
+    private void textCreatorHandler(Context ctx) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(ctx.body(), Message.class);
-        Message newMessage = messageService.textCreater(message);
+        Message newMessage = messageService.textCreator(message);
         if(newMessage == null){
             ctx.status(400);
         }else{
@@ -64,20 +50,18 @@ public class SocialMediaController {
         }
     }
     
-     /* private void loginHandler(Context ctx) {
-        ctx.json(accountService.login(ctx.queryParam("username"),
-                ctx.queryParam("password")));
-    } */
-
-    /* private void loginHandler(Context ctx) throws JsonProcessingException {
+    private void loginHandler(Context context)throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        Account account = mapper.readValue(ctx.body(), Account.class);
-        Account existingAccount = accountService.login(account);
-        if(existingAccount == null){
-            ctx.status(400);
+        Account account = mapper.readValue(context.body(), 
+        Account.class);
+        String username = account.getUsername();
+        String password = account.getPassword();
+ 
+        Account loginAccount = accountService.login(account);
+        if(loginAccount == null){
+          context.status(401).json("");
         }else{
-            ctx.json(mapper.writeValueAsString(existingAccount));
+          context.json(mapper.writeValueAsString(loginAccount));
         }
-
-    } */
+     }
 }

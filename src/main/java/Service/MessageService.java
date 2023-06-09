@@ -1,9 +1,10 @@
 package Service;
 
-import Model.Account;
-import Model.Message;
 import DAO.MessageDAO;
+import Model.Message;
+
 import DAO.AccountDAO;
+import Model.Account;
 
 import java.util.List;
 
@@ -19,17 +20,14 @@ public class MessageService {
     public MessageService(MessageDAO messageDAO){
         this.messageDAO = messageDAO;
     }
-    public MessageService(AccountDAO accountDAO){
-        this.accountDAO = accountDAO;
-    }
-
     
-    public Message textCreater(Message message) {
+    public Message textCreator(Message message) {
     Message existingMessage = messageDAO.getMessageById(message.getMessage_id());
     
-    if (existingMessage == null
-            || message.getMessage_text().equals("")
-            || message.getMessage_text().length() < 255){
+    if (existingMessage != null
+            || message.getMessage_text().isEmpty()
+            || message.getMessage_text().length() >= 255)
+            {
                 return null;
             }
         Integer account_id = message.getPosted_by();        
