@@ -21,6 +21,11 @@ public class MessageService {
         this.messageDAO = messageDAO;
     }
     
+
+    public List<Message> getAllMessages() {
+        return messageDAO.getAllMessages();
+    }
+
     public Message textCreator(Message message) {
     Message existingMessage = messageDAO.getMessageById(message.getMessage_id());
     
@@ -30,7 +35,11 @@ public class MessageService {
             {
                 return null;
             }
-        Integer account_id = message.getPosted_by();        
+        Integer account_id = message.getPosted_by();   
+        //I was not sure Am I doing right by define a variable
+        //from accountDAO class
+        //because we don't have in Flight or Library
+        //But!!! It works)))     
         Account existingAccount = accountDAO.getAccountById(account_id);
         if(existingAccount == null 
         || existingAccount.getAccount_id() != account_id){

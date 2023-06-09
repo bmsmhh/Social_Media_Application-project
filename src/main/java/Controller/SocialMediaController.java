@@ -25,8 +25,12 @@ public class SocialMediaController {
         app.post("/register", this::registerHandler);
         app.post("/login", this::loginHandler);
         app.post("/messages", this::textCreatorHandler);
+        app.get("/messages", this::getAllMessagesHandler);
         
         return app;
+    }
+    private void getAllMessagesHandler(Context ctx){
+        ctx.json(messageService.getAllMessages());
     }
     private void textCreatorHandler(Context ctx) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
