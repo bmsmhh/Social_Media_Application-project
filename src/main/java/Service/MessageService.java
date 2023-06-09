@@ -22,6 +22,10 @@ public class MessageService {
     }
     
 
+    public List<Message> getAllMessagesOfUser(int account_id) {
+        return messageDAO.getAllMessagesOfUser(account_id);
+    }
+
     public Message deleteMessageByMessageId(int message_id) {
         Message deletedMessage = getMessageById(message_id);
         if (deletedMessage != null) {

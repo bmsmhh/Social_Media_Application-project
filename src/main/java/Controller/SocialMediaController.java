@@ -4,6 +4,7 @@ import Model.Account;
 import Model.Message;
 import Service.AccountService;
 import Service.MessageService;
+import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,8 +31,15 @@ public class SocialMediaController {
         app.patch(path, this::updateMessageHandler);
         app.get("/messages/{message_id}", this::getMessageByIdHandler);
         app.delete("/messages/{message_id}", this::deleteMessageByMessageIdHandler);
+        app.get("accounts/{account_id}/messages", this::getAllMessagesOfUserHandler);
 
         return app;
+    }
+
+    private void getAllMessagesOfUserHandler(Context ctx){
+        int account_id = Integer.parseInt(ctx.pathParam("account_id"));
+        List<Message> messages = messageService.getAllMessagesOfUser(account_id);
+        ctx.json(messages);
     }
 
     private void deleteMessageByMessageIdHandler(Context ctx) {
@@ -43,8 +51,6 @@ public class SocialMediaController {
             ctx.status(200).json(message);
         }
     }
-
-
 
     private void getMessageByIdHandler(Context ctx) {
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
